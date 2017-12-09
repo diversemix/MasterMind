@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace MasterMindLibrary
 {
@@ -42,6 +43,8 @@ namespace MasterMindLibrary
                                                 NUM_COLOURS, coloursToUse.Length);
                 throw new ArgumentOutOfRangeException(errorMsg);
             }
+            colours = new ColourChoice[NUM_COLOURS];
+
             for (int i = 0; i < coloursToUse.Length; i++)
             {
                 colours[i] = coloursToUse[i];
@@ -51,16 +54,32 @@ namespace MasterMindLibrary
         /// <summary>
         /// Get property for the set of colours.
         /// </summary>
-        public ColourChoice[] Colours { get { return this.colours;  } }
+        public ColourChoice[] Colours { get { return colours;  } }
 
+        public static string ColoursToString(ColourChoice[] colours)
+        {
+            return String.Join(" | ", colours);
+        }
         /// <summary>
         /// Useful function for debugging.
         /// </summary>
         /// <returns>Representation of the four colours.</returns>
         override public string ToString()
         {
-            string representation = String.Join(" | ", colours);
-            return String.Format("<{0}: [{1}]>", this.GetType().Name, representation);
+            return String.Format("<{0}: [{1}]>", GetType().Name, ColoursToString(colours));
+        }
+       
+        public override int GetHashCode()
+        {
+            // This is needed to supress CS0659
+            return 75448090 + EqualityComparer<ColourChoice[]>.Default.GetHashCode(colours);
+        }
+
+        public override bool Equals(object obj)
+        {
+            var set = obj as ColourSet;
+            return set != null &&
+                   ColoursToString(colours) == ColoursToString(set.colours);
         }
     }
 }

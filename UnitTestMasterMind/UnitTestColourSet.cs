@@ -16,5 +16,33 @@ namespace UnitTestMasterMind
         {
             ColourSet cs1 = new ColourSet(ColourChoice.YELLOW);
         }
+
+        [TestMethod]
+        public void TestCreateColourSet()
+        {
+            ColourSet cs1 = new ColourSet(
+                ColourChoice.BLUE,
+                ColourChoice.YELLOW,
+                ColourChoice.GREEN,
+                ColourChoice.RED);
+        }
+
+        [TestMethod]
+        public void TestEquality()
+        {
+            ColourSet cs1 = new ColourSet(
+                ColourChoice.BLUE,
+                ColourChoice.YELLOW,
+                ColourChoice.GREEN,
+                ColourChoice.RED);
+
+            ColourSet cs2 = new ColourSet(
+                ColourChoice.BLUE,
+                ColourChoice.YELLOW,
+                ColourChoice.GREEN,
+                ColourChoice.RED);
+
+            Assert.AreEqual(cs1, cs2);
+        }
     }
 }
