@@ -1,12 +1,21 @@
 using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MasterMindLibrary;
+using System.Collections.Generic;
 
 namespace UnitTestMasterMind
 {
     [TestClass]
     public class UnitTestColourSet
     {
+        private ColourSet csA = new ColourSet("BLUE", "YELLOW", "GREEN", "RED");
+        private ColourSet csB = new ColourSet("BLUE", "YELLOW", "GREEN", "RED");
+        private ColourSet csC = new ColourSet("YELLOW", "GREEN", "RED", "BLUE");
+        private ColourSet csD = new ColourSet("YELLOW", "BLUE", "GREEN", "RED");
+
+        private ColourSet csX = new ColourSet("RED", "BLUE", "RED", "BLUE");
+        private ColourSet csY = new ColourSet("YELLOW", "GREEN", "YELLOW", "GREEN");
+
         /// <summary>
         /// Ensure we throw an exception if we are not initialised properly.
         /// </summary>
@@ -14,35 +23,53 @@ namespace UnitTestMasterMind
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void TestNotInitedProperly()
         {
-            ColourSet cs1 = new ColourSet(ColourChoice.YELLOW);
-        }
-
-        [TestMethod]
-        public void TestCreateColourSet()
-        {
-            ColourSet cs1 = new ColourSet(
-                ColourChoice.BLUE,
-                ColourChoice.YELLOW,
-                ColourChoice.GREEN,
-                ColourChoice.RED);
+            ColourSet csWrong = new ColourSet("YELLOW");
         }
 
         [TestMethod]
         public void TestEquality()
         {
-            ColourSet cs1 = new ColourSet(
-                ColourChoice.BLUE,
-                ColourChoice.YELLOW,
-                ColourChoice.GREEN,
-                ColourChoice.RED);
+            Assert.AreEqual(csA, csB);
+        }
 
-            ColourSet cs2 = new ColourSet(
-                ColourChoice.BLUE,
-                ColourChoice.YELLOW,
-                ColourChoice.GREEN,
-                ColourChoice.RED);
+        [TestMethod]
+        public void TestPinsAllBlack()
+        {
+            List<ComparePin> pins = csA.Compare(csB);
+            Assert.AreEqual(pins.Count, 4);
+            foreach (ComparePin pin in pins)
+            {
+                Assert.AreEqual(pin, ComparePin.BLACK);
+            }
+        }
 
-            Assert.AreEqual(cs1, cs2);
+        [TestMethod]
+        public void TestPinsAllWhite()
+        {
+            List<ComparePin> pins = csA.Compare(csC);
+            Assert.AreEqual(pins.Count, 4);
+            foreach (ComparePin pin in pins)
+            {
+                Assert.AreEqual(pin, ComparePin.WHITE);
+            }
+        }
+
+        [TestMethod]
+        public void TestPins2Black2White()
+        {
+            List<ComparePin> pins = csA.Compare(csD);
+            Assert.AreEqual(pins.Count, 4);
+            Assert.AreEqual(pins[0], ComparePin.BLACK);
+            Assert.AreEqual(pins[1], ComparePin.BLACK);
+            Assert.AreEqual(pins[2], ComparePin.WHITE);
+            Assert.AreEqual(pins[3], ComparePin.WHITE);
+        }
+
+        [TestMethod]
+        public void TestZeroPins()
+        {
+            List<ComparePin> pins = csX.Compare(csY);
+            Assert.AreEqual(pins.Count, 0);
         }
     }
 }
