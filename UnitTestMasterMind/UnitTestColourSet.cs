@@ -2,6 +2,7 @@ using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MasterMindLibrary;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace UnitTestMasterMind
 {
@@ -15,6 +16,7 @@ namespace UnitTestMasterMind
 
         private ColourSet csX = new ColourSet("RED", "BLUE", "RED", "BLUE");
         private ColourSet csY = new ColourSet("YELLOW", "GREEN", "YELLOW", "GREEN");
+        private ColourSet csZ = new ColourSet("RED", "GREEN", "YELLOW", "GREEN");
 
         /// <summary>
         /// Ensure we throw an exception if we are not initialised properly.
@@ -59,10 +61,10 @@ namespace UnitTestMasterMind
         {
             List<ComparePin> pins = csA.Compare(csD);
             Assert.AreEqual(pins.Count, 4);
-            Assert.AreEqual(pins[0], ComparePin.BLACK);
-            Assert.AreEqual(pins[1], ComparePin.BLACK);
-            Assert.AreEqual(pins[2], ComparePin.WHITE);
-            Assert.AreEqual(pins[3], ComparePin.WHITE);
+            var blackPins = from p in pins where p == ComparePin.BLACK select p;
+            var whitePins = from p in pins where p == ComparePin.WHITE select p;
+            Assert.AreEqual(blackPins.Count(), 2);
+            Assert.AreEqual(whitePins.Count(), 2);
         }
 
         [TestMethod]
@@ -70,6 +72,14 @@ namespace UnitTestMasterMind
         {
             List<ComparePin> pins = csX.Compare(csY);
             Assert.AreEqual(pins.Count, 0);
+        }
+
+        [TestMethod]
+        public void Test1BlackPin()
+        {
+            List<ComparePin> pins = csX.Compare(csZ);
+            Assert.AreEqual(pins.Count, 1);
+            Assert.AreEqual(pins[0], ComparePin.BLACK);
         }
     }
 }
