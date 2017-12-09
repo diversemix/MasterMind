@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MasterMindLibrary", "Master
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MasterMindGame", "MasterMindGame\MasterMindGame.csproj", "{ECFE986B-1636-4C5A-8DB3-39D5C2B160A1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestMasterMind", "UnitTestProject1\UnitTestMasterMind.csproj", "{A6522351-2E44-468C-A2BE-7448ECCA5756}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestMasterMind", "UnitTestMasterMind\UnitTestMasterMind.csproj", "{A6522351-2E44-468C-A2BE-7448ECCA5756}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
